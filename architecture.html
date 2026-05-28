@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>System Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0c10;font-family:'Inter',sans-serif;padding:40px 24px;color:#e2e8f0}
+.page{max-width:1000px;margin:0 auto}
+.header{text-align:center;margin-bottom:40px}
+.header .label{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#4a5568;margin-bottom:10px}
+.header h1{font-size:28px;font-weight:600;color:#f0f4f8;margin-bottom:6px}
+.header p{font-size:13px;color:#718096}
+.flow{display:flex;flex-direction:column;gap:2px}
+.layer{display:flex;gap:2px}
+.layer-label{writing-mode:vertical-lr;transform:rotate(180deg);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#4a5568;padding:0 10px;display:flex;align-items:center;justify-content:center;background:#0f1117;border:1px solid #1a1f2e;min-width:34px}
+.layer-content{flex:1;display:flex;gap:2px}
+.node{background:#0f1117;border:1px solid #1e2535;border-radius:4px;padding:16px;flex:1}
+.node h4{font-size:13px;font-weight:600;color:#e2e8f0;margin-bottom:4px}
+.node p{font-size:11px;color:#4a5568;line-height:1.5}
+.node .tag{display:inline-block;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin-top:6px}
+.tag-blue{background:rgba(37,99,235,0.12);color:#3b82f6;border:1px solid rgba(37,99,235,0.2)}
+.tag-green{background:rgba(16,185,129,0.1);color:#10b981;border:1px solid rgba(16,185,129,0.2)}
+.tag-purple{background:rgba(124,58,237,0.1);color:#8b5cf6;border:1px solid rgba(124,58,237,0.2)}
+.tag-amber{background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.2)}
+.tag-gray{background:rgba(100,116,139,0.1);color:#94a3b8;border:1px solid rgba(100,116,139,0.2)}
+.arrow{display:flex;height:28px;align-items:center;padding-left:36px}
+.arrow-inner{flex:1;display:flex;align-items:center;justify-content:center;gap:8px}
+.arrow-line{flex:1;height:1px;background:#1e2535}
+.arrow-text{font-size:9px;color:#334155;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.arrow-head{color:#334155;font-size:14px}
+.data-flow{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:32px;padding:24px;background:#0f1117;border:1px solid #1a1f2e;border-radius:4px;flex-wrap:wrap}
+.df{text-align:center;min-width:80px}
+.df .icon{font-size:22px;margin-bottom:4px}
+.df .t{font-size:11px;font-weight:600;color:#94a3b8}
+.df .s{font-size:9px;color:#4a5568}
+.arr{color:#1e2d40;font-size:18px;margin-bottom:12px}
+.specs{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:2px}
+.spec{background:#0f1117;border:1px solid #1a1f2e;padding:14px;text-align:center}
+.spec .sl{font-size:9px;color:#4a5568;margin-bottom:4px;letter-spacing:1px;text-transform:uppercase}
+.spec .sv{font-size:12px;font-weight:600;color:#94a3b8}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+  <div class="label">Big Data Project</div>
+  <h1>Proposed System Architecture</h1>
+  <p>Superstore Sales Analysis — End-to-End Data Pipeline</p>
+</div>
+<div class="flow">
+  <div class="layer">
+    <div class="layer-label">Source</div>
+    <div class="layer-content">
+      <div class="node"><h4>📄 Sample Superstore Dataset</h4><p>CSV · 9,994 records · 13 columns</p><span class="tag tag-gray">Raw Input</span></div>
+      <div class="node"><h4>🖥️ Windows 11 Host</h4><p>VMware Workstation</p><span class="tag tag-gray">Host</span></div>
+      <div class="node"><h4>📁 Shared Folder</h4><p>/mnt/hgfs/myshare</p><span class="tag tag-gray">Transfer</span></div>
+    </div>
+  </div>
+  <div class="arrow"><div class="arrow-inner"><div class="arrow-line"></div><div class="arrow-text">VMware file transfer</div><div class="arrow-line"></div><div class="arrow-head">▼</div></div></div>
+  <div class="layer">
+    <div class="layer-label">Environment</div>
+    <div class="layer-content">
+      <div class="node"><h4>🐧 Ubuntu 24.04.2</h4><p>Guest OS on VMware</p><span class="tag tag-blue">OS</span></div>
+      <div class="node"><h4>☕ Java JDK 11</h4><p>JVM runtime for Spark</p><span class="tag tag-blue">Runtime</span></div>
+      <div class="node"><h4>🔑 SSH Service</h4><p>Required for Hadoop</p><span class="tag tag-blue">Service</span></div>
+      <div class="node"><h4>🐍 Python 3.12</h4><p>PySpark · Pandas · Matplotlib</p><span class="tag tag-blue">Language</span></div>
+    </div>
+  </div>
+  <div class="arrow"><div class="arrow-inner"><div class="arrow-line"></div><div class="arrow-text">hdfs dfs -put</div><div class="arrow-line"></div><div class="arrow-head">▼</div></div></div>
+  <div class="layer">
+    <div class="layer-label">Storage</div>
+    <div class="layer-content">
+      <div class="node"><h4>🐘 Hadoop HDFS 3.3.6</h4><p>NameNode · DataNode · SecondaryNameNode<br/>hdfs://localhost:9000</p><span class="tag tag-blue">Distributed Storage</span></div>
+      <div class="node"><h4>📂 Input Path</h4><p>/user/yashraja/bigdata/<br/>SampleSuperstore.csv</p><span class="tag tag-blue">Input</span></div>
+      <div class="node"><h4>📂 Output Path</h4><p>/user/yashraja/bigdata/output/<br/>sql · ml · charts</p><span class="tag tag-blue">Output</span></div>
+    </div>
+  </div>
+  <div class="arrow"><div class="arrow-inner"><div class="arrow-line"></div><div class="arrow-text">spark.read.csv — hdfs://localhost:9000</div><div class="arrow-line"></div><div class="arrow-head">▼</div></div></div>
+  <div class="layer">
+    <div class="layer-label">Processing</div>
+    <div class="layer-content">
+      <div class="node"><h4>⚡ Apache Spark 3.5.8</h4><p>In-memory distributed processing<br/>local[*] · All CPU cores</p><span class="tag tag-green">Engine</span></div>
+      <div class="node"><h4>🔍 Spark SQL</h4><p>5 analytical queries<br/>GROUP BY · SUM · AVG</p><span class="tag tag-green">Analytics</span></div>
+      <div class="node"><h4>🧹 Data Cleaning</h4><p>df.na.drop()<br/>Null removal</p><span class="tag tag-green">ETL</span></div>
+    </div>
+  </div>
+  <div class="arrow"><div class="arrow-inner"><div class="arrow-line"></div><div class="arrow-text">StringIndexer → VectorAssembler → LinearRegression</div><div class="arrow-line"></div><div class="arrow-head">▼</div></div></div>
+  <div class="layer">
+    <div class="layer-label">ML</div>
+    <div class="layer-content">
+      <div class="node"><h4>🔤 StringIndexer</h4><p>Text → Numeric index<br/>Region · Category · Segment</p><span class="tag tag-purple">Feature Prep</span></div>
+      <div class="node"><h4>🎒 VectorAssembler</h4><p>Combine all features<br/>→ features vector</p><span class="tag tag-purple">Feature Prep</span></div>
+      <div class="node"><h4>📐 Linear Regression</h4><p>Predict Profit<br/>80% train · 20% test</p><span class="tag tag-purple">Model</span></div>
+      <div class="node"><h4>🎯 Evaluation</h4><p>RMSE: 211.27<br/>R2: 0.2121</p><span class="tag tag-purple">Metrics</span></div>
+    </div>
+  </div>
+  <div class="arrow"><div class="arrow-inner"><div class="arrow-line"></div><div class="arrow-text">df.write.csv → HDFS</div><div class="arrow-line"></div><div class="arrow-head">▼</div></div></div>
+  <div class="layer">
+    <div class="layer-label">Output</div>
+    <div class="layer-content">
+      <div class="node"><h4>📊 SQL Results</h4><p>HDFS /output/sql_results</p><span class="tag tag-amber">CSV</span></div>
+      <div class="node"><h4>🤖 ML Predictions</h4><p>HDFS /output/ml_predictions</p><span class="tag tag-amber">CSV</span></div>
+      <div class="node"><h4>📈 5 Charts</h4><p>HDFS /output/charts<br/>PNG · 150 DPI</p><span class="tag tag-amber">PNG</span></div>
+      <div class="node"><h4>🌐 HTML Report</h4><p>HDFS + Local<br/>hadoop_website.html</p><span class="tag tag-amber">HTML</span></div>
+    </div>
+  </div>
+</div>
+<div class="specs">
+  <div class="spec"><div class="sl">Dataset</div><div class="sv">9,994 records</div></div>
+  <div class="spec"><div class="sl">Engine</div><div class="sv">Spark 3.5.8</div></div>
+  <div class="spec"><div class="sl">Storage</div><div class="sv">Hadoop HDFS 3.3.6</div></div>
+  <div class="spec"><div class="sl">ML Model</div><div class="sv">RMSE 211.27 · R2 0.21</div></div>
+</div>
+<div class="data-flow">
+  <div class="df"><div class="icon">📄</div><div class="t">CSV</div><div class="s">Windows</div></div>
+  <div class="arr">→</div>
+  <div class="df"><div class="icon">📁</div><div class="t">Shared</div><div class="s">VMware</div></div>
+  <div class="arr">→</div>
+  <div class="df"><div class="icon">🐧</div><div class="t">Ubuntu</div><div class="s">Local FS</div></div>
+  <div class="arr">→</div>
+  <div class="df"><div class="icon">🐘</div><div class="t">HDFS</div><div class="s">hdfs -put</div></div>
+  <div class="arr">→</div>
+  <div class="df"><div class="icon">⚡</div><div class="t">Spark</div><div class="s">In-memory</div></div>
+  <div class="arr">→</div>
+  <div class="df"><div class="icon">🔍</div><div class="t">SQL + ML</div><div class="s">Analysis</div></div>
+  <div class="arr">→</div>
+  <div class="df"><div class="icon">📈</div><div class="t">Charts</div><div class="s">Matplotlib</div></div>
+  <div class="arr">→</div>
+  <div class="df"><div class="icon">🐘</div><div class="t">HDFS Out</div><div class="s">Saved</div></div>
+  <div class="arr">→</div>
+  <div class="df"><div class="icon">🌐</div><div class="t">Report</div><div class="s">HTML</div></div>
+</div>
+</div>
+</body>
+</html>
